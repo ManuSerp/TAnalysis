@@ -11,7 +11,6 @@ class TAnalyzer:
     def load_json(self, json_path):
         with open(json_path) as json_file:
             self.json = json.load(json_file)
-        print(self.json)
 
     def gen_def(self, node):
 
@@ -94,15 +93,18 @@ class TAnalyzer:
                     predindex = pred-self.index
                     uni = uni.union(self.OUT[predindex])
                     IN[nodeindex] = uni
-                    old_out[nodeindex] = self.OUT[nodeindex]
-                    self.OUT[nodeindex] = self.gen_def(node).union(
-                        IN[nodeindex] - self.kill_def(node))
-                    if self.OUT[nodeindex] != old_out[nodeindex]:
-                        changes = True
+                old_out[nodeindex] = self.OUT[nodeindex]
+                self.OUT[nodeindex] = self.gen_def(node).union(
+                    IN[nodeindex] - self.kill_def(node))
+                if self.OUT[nodeindex] != old_out[nodeindex]:
+
+                    changes = True
 
         sink_list = []
         for skink in self.json["sinks"]:
             sink_list.append([skink, self.OUT[skink-self.index]])
+
+        print(sink_list)
         return self.OUT, self.sink_compta(sink_list)
 
 
@@ -111,8 +113,89 @@ if __name__ == "__main__":
     cfgreader = CFGReader()
     astreader = ASTReader()
     t_analyzer = TAnalyzer()
-    cfg = cfgreader.read_cfg("../tp/part_1/file_2.php.cfg.json")
-    t_analyzer.load_json("../tp/part_1/file_2.php.taint.json")
+    cfg = cfgreader.read_cfg("../tp/part_1/file_5.php.cfg.json")
+    t_analyzer.load_json("../tp/part_1/file_5.php.taint.json")
     out, skink = t_analyzer.poss_t_def(cfg)
     print(out)
     print(skink)
+
+    print("website")
+
+    print("about.php")
+    t_analyzer = TAnalyzer()
+    cfg = cfgreader.read_cfg("../tp/part_2/app.cfg/about.php.cfg.json")
+    t_analyzer.load_json("../tp/part_2/app.cfg/about.php.taint.json")
+    out, skink = t_analyzer.poss_t_def(cfg)
+
+    for x in skink:
+        print(
+            f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])} is tainted by: ")
+        for y in x[1]:
+            print(
+                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)}")
+    print("contact.php")
+    t_analyzer = TAnalyzer()
+    cfg = cfgreader.read_cfg("../tp/part_2/app.cfg/contact.php.cfg.json")
+    t_analyzer.load_json("../tp/part_2/app.cfg/contact.php.taint.json")
+    out, skink = t_analyzer.poss_t_def(cfg)
+
+    for x in skink:
+        print(
+            f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
+        for y in x[1]:
+            print(
+                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+
+    print("departments.php")
+    t_analyzer = TAnalyzer()
+    cfg = cfgreader.read_cfg("../tp/part_2/app.cfg/departments.php.cfg.json")
+    t_analyzer.load_json("../tp/part_2/app.cfg/departments.php.taint.json")
+    out, skink = t_analyzer.poss_t_def(cfg)
+
+    for x in skink:
+        print(
+            f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
+        for y in x[1]:
+            print(
+                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+
+    print("index.php")
+    t_analyzer = TAnalyzer()
+    cfg = cfgreader.read_cfg("../tp/part_2/app.cfg/index.php.cfg.json")
+    t_analyzer.load_json("../tp/part_2/app.cfg/index.php.taint.json")
+    out, skink = t_analyzer.poss_t_def(cfg)
+
+    for x in skink:
+        print(
+            f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
+        for y in x[1]:
+            print(
+                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+
+    print("includes/footer.php")
+    t_analyzer = TAnalyzer()
+    cfg = cfgreader.read_cfg(
+        "../tp/part_2/app.cfg/includes/footer.php.cfg.json")
+    t_analyzer.load_json("../tp/part_2/app.cfg/includes/footer.php.taint.json")
+    out, skink = t_analyzer.poss_t_def(cfg)
+
+    for x in skink:
+        print(
+            f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
+        for y in x[1]:
+            print(
+                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+
+    print("includes/header.php")
+    t_analyzer = TAnalyzer()
+    cfg = cfgreader.read_cfg(
+        "../tp/part_2/app.cfg/includes/header.php.cfg.json")
+    t_analyzer.load_json("../tp/part_2/app.cfg/includes/header.php.taint.json")
+    out, skink = t_analyzer.poss_t_def(cfg)
+
+    for x in skink:
+        print(
+            f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
+        for y in x[1]:
+            print(
+                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
