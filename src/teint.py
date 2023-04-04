@@ -124,7 +124,7 @@ if __name__ == "__main__":
     print(out)
     print(skink)
 
-    print("website")
+    print("\n---------------\nwebsite\n---------------\n")
 
     print("about.php")
     t_analyzer = TAnalyzer()
@@ -137,7 +137,7 @@ if __name__ == "__main__":
             f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])} is tainted by: ")
         for y in x[1]:
             print(
-                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)}")
+                f"/!\/!\/!\ def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)}")
     print("contact.php")
     t_analyzer = TAnalyzer()
     cfg = cfgreader.read_cfg("../tp/part_2/app.cfg/contact.php.cfg.json")
@@ -149,7 +149,7 @@ if __name__ == "__main__":
             f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
         for y in x[1]:
             print(
-                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+                f"/!\/!\/!\ def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
 
     print("departments.php")
     t_analyzer = TAnalyzer()
@@ -162,7 +162,7 @@ if __name__ == "__main__":
             f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
         for y in x[1]:
             print(
-                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+                f"/!\/!\/!\ def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
 
     print("index.php")
     t_analyzer = TAnalyzer()
@@ -175,7 +175,7 @@ if __name__ == "__main__":
             f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
         for y in x[1]:
             print(
-                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+                f"/!\/!\/!\ def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
 
     print("includes/footer.php")
     t_analyzer = TAnalyzer()
@@ -185,10 +185,10 @@ if __name__ == "__main__":
     out, skink = t_analyzer.poss_t_def(cfg)
     for x in skink:
         print(
-            f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
+            f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: \n\n")
         for y in x[1]:
             print(
-                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+                f"/!\/!\/!\ def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}\n\n")
 
     print("includes/header.php")
     t_analyzer = TAnalyzer()
@@ -202,4 +202,4 @@ if __name__ == "__main__":
             f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
         for y in x[1]:
             print(
-                f"def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
+                f"/!\/!\/!\ def {y} named {cfg.get_image(y)} at position {cfg.get_position(y)[0]}")
