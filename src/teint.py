@@ -28,6 +28,7 @@ class TAnalyzer:
                 parent = parent[0]
                 if self.cfg.get_type(parent) == "BinOP":
                     arg = self.get_var_op(parent)
+
                 elif self.cfg.get_type(parent) == "Variable":
                     arg = [parent]
                 else:
@@ -55,13 +56,17 @@ class TAnalyzer:
         res = []
         if self.cfg.get_type(node) == "BinOP":
             hands = self.cfg.get_op_hands(node)
+
             if self.cfg.get_type(hands[0]) == "Variable" or self.cfg.get_type(hands[0]) == "ArrayExpression":
+
                 res.append(hands[0])
             elif self.cfg.get_type(hands[0]) == "BinOP":
                 res.extend(self.get_var_op(hands[0]))
-            elif self.cfg.get_type(hands[1]) == "Variable" or self.cfg.get_type(hands[1]) == "ArrayExpression":
+            if self.cfg.get_type(hands[1]) == "Variable" or self.cfg.get_type(hands[1]) == "ArrayExpression":
                 res.append(hands[1])
+
             elif self.cfg.get_type(hands[1]) == "BinOP":
+
                 res.extend(self.get_var_op(hands[1]))
         return res
 
@@ -71,6 +76,7 @@ class TAnalyzer:
             defi = []
             sink = k[0]
             for i in k[1]:
+
                 if self.cfg.get_image(i) == self.cfg.get_image(sink):
                     defi.append(i)
             res.append([sink, defi])
@@ -101,10 +107,9 @@ class TAnalyzer:
                     changes = True
 
         sink_list = []
-        for skink in self.json["sinks"]:
-            sink_list.append([skink, self.OUT[skink-self.index]])
+        for sink in self.json["sinks"]:
+            sink_list.append([sink, self.OUT[sink-self.index]])
 
-        print(sink_list)
         return self.OUT, self.sink_compta(sink_list)
 
 
@@ -178,7 +183,6 @@ if __name__ == "__main__":
         "../tp/part_2/app.cfg/includes/footer.php.cfg.json")
     t_analyzer.load_json("../tp/part_2/app.cfg/includes/footer.php.taint.json")
     out, skink = t_analyzer.poss_t_def(cfg)
-
     for x in skink:
         print(
             f"sink {x[0]} named {cfg.get_image(x[0])} at position {cfg.get_position(x[0])[0]} is tainted by: ")
